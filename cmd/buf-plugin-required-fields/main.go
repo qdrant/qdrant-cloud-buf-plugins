@@ -1,7 +1,7 @@
 // Package main implements a plugin that checks that:
 // - entity-related messages (e.g: Cluster) define a known set of common fields
 // for the Qdrant Cloud API. Default values: id, name, account_id, created_at
-// - Request messages (e.g: ListClusters) define a known set of common fields
+// - Request messages (e.g: ListClustersRequest) define a known set of common fields
 // for the Qdrant Cloud API. Default values: account_id
 //
 // To use this plugin:
