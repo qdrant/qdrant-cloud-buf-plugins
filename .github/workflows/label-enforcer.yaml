@@ -4,9 +4,6 @@ on:
   pull_request:
     types: [opened, edited, labeled, unlabeled, synchronize]
 
-permissions:
-  contents: read
-
 jobs:
   enforce-label:
     permissions:
