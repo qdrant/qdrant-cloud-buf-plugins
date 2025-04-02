@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+// As a commodity, we re-define it here to avoid relying on the real dependency.
+
+package qdrant.cloud.common.v1;
+
+import "google/protobuf/descriptor.proto";
+
+// The extension for adding permissions to the system
+extend google.protobuf.MethodOptions {
+    // A list of permissions which ALL need to be met by the current user.
+    repeated string permissions = 50001;
+}
