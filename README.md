@@ -1,6 +1,6 @@
 # qdrant-cloud-buf-plugins
 
-Collection of [Buf plugins](https://buf.build/docs/cli/buf-plugins/overview/) used by Qdrant Cloud APIs.
+Collection of [Buf plugins](https://buf.build/docs/cli/buf-plugins/overview/) used by Qdrant Cloud APIs
 
 ## Development
 
