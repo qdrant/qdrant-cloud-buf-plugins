@@ -1,0 +1,61 @@
+name: PR Workflow
+on:
+  pull_request:
+    types: [synchronize, opened, reopened]
+    branches: ["main"]
+env:
+  GOPRIVATE: github.com/qdrant/qdrant-cloud-public-api
+
+permissions:
+  contents: read
+
+jobs:
+  linter:
+    name: Linter
+    runs-on: ubuntu-latest
+    timeout-minutes: 10 # Sets a timeout of 10 minutes for this job (default is 1 minute)
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Setup access for private go modules
+        run: |
+          git config --global url.'https://${{ secrets.GH_REPO_READ_TOKEN }}@github.com'.insteadOf 'https://github.com'
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "^1.24"
+          cache: false
+
+      - name: Check Go Formatting
+        run: |
+          files=$(gofmt -l .) && echo $files && [ -z "$files" ]
+
+      - name: Golang CI Lint
+        uses: golangci/golangci-lint-action@v7
+        with:
+          version: v2.0.1
+          args: --timeout 10m
+
+  unit-tests:
+    name: Unit Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Setup access for private go modules
+        run: |
+          git config --global url.'https://${{ secrets.GH_REPO_READ_TOKEN }}@github.com'.insteadOf 'https://github.com'
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "^1.24"
+
+      - name: Unit tests
+        run: |
+          make test_unit

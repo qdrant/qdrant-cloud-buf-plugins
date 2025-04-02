@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package simple;
+
+import "google/protobuf/empty.proto";
+import "google/protobuf/descriptor.proto";
+import "../common.proto";
+import "../google.proto";
+
+service GreeterService {
+    rpc HelloWorld(google.protobuf.Empty) returns (google.protobuf.Empty) {
+        // permissions
+        option (qdrant.cloud.common.v1.permissions) = "read:api_keys";
+        option (google.api.http) = {get: "/api/hello-world"};
+    }
+}
