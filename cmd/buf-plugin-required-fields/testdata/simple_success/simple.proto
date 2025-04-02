@@ -1,0 +1,37 @@
+syntax = "proto3";
+
+package simple;
+
+import "google/protobuf/timestamp.proto";
+
+service BookService {
+    rpc ListBooks(ListBooksRequest) returns (ListBooksResponse) {
+    }
+
+    rpc GetBook(GetBookRequest) returns (GetBookResponse) {
+    }
+}
+
+message ListBooksRequest {
+    string account_id = 1;
+}
+
+message ListBooksResponse {
+    repeated Book items = 1;
+}
+
+message GetBookRequest {
+    string account_id = 1;
+
+}
+
+message GetBookResponse {
+    Book book = 1;
+}
+
+message Book {
+    string id = 1;
+    string account_id = 2;
+    string name = 3;
+    google.protobuf.Timestamp created_at = 4;
+}

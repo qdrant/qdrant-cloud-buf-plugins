@@ -1,0 +1,62 @@
+syntax = "proto3";
+
+package simple;
+
+import "google/protobuf/timestamp.proto";
+
+service BookService {
+    rpc ListBooks(ListBooksRequest) returns (ListBooksResponse) {
+    }
+
+    rpc GetBook(GetBookRequest) returns (GetBookResponse) {
+    }
+
+    rpc CreateBookCategory(CreateBookCategoryRequest) returns (CreateBookCategoryResponse) {
+    }
+}
+
+message ListBooksRequest {
+    // missing account_id field
+}
+
+message ListBooksResponse {
+    repeated Book items = 1;
+}
+
+message GetBookRequest {
+    // missing account_id field
+    // missing book_id field
+}
+
+message GetBookResponse {
+    Book book = 1;
+}
+
+message CreateBookCategoryRequest {
+    BookCategory category = 1;
+}
+
+message CreateBookCategoryResponse {
+    BookCategory category = 1;
+}
+
+message Book {
+    // missing `id` field
+    string name = 1;
+    // missing `account_id` field
+    // missing `created_at` field
+    BookCategory category = 2;
+    Publisher publisher = 3;
+}
+
+message BookCategory {
+    string id = 1;
+    // missing `name` field
+    string account_id = 2;
+    google.protobuf.Timestamp created_at = 3;
+}
+
+// this message does not have any related CRUD method, we don't consider it an entity and
+// required fields don't apply for it.
+message Publisher {
+}
