@@ -1,8 +1,8 @@
 // Package main implements a plugin that checks that:
 // - entity-related messages (e.g: Cluster) define a known set of common fields
-// for the Qdrant Cloud API.
+// for the Qdrant Cloud API. Default values: id, name, account_id, created_at
 // - Request messages (e.g: ListClusters) define a known set of common fields
-// for the Qdrant Cloud API.
+// for the Qdrant Cloud API. Default values: account_id
 //
 // To use this plugin:
 //
@@ -48,7 +48,7 @@ var (
 	requiredRequestFieldsRuleSpec = &check.RuleSpec{
 		ID:      requiredRequestFieldsRuleID,
 		Default: true,
-		Purpose: `Checks that all request methods (e.g: ListClutersRequest) define a known set of fields for the Qdrant Cloud API.`,
+		Purpose: `Checks that all request methods (e.g: ListClustersRequest) define a known set of fields for the Qdrant Cloud API.`,
 		Type:    check.RuleTypeLint,
 		Handler: checkutil.NewMessageRuleHandler(checkRequestFields, checkutil.WithoutImports()),
 	}
@@ -64,9 +64,10 @@ var (
 		},
 	}
 
-	crudMethodPrefixes           = []string{"List", "Get", "Delete", "Update", "Create"}
-	defaultRequiredFields        = []string{"id", "name", "account_id", "created_at"}
-	defaultRequiredRequestFields = []string{"account_id"}
+	crudMethodPrefixes                  = []string{"List", "Get", "Delete", "Update", "Create"}
+	crudMethodWithoutFullEntityPrefixes = []string{"List", "Get", "Delete"}
+	defaultRequiredFields               = []string{"id", "name", "account_id", "created_at"}
+	defaultRequiredRequestFields        = []string{"account_id"}
 )
 
 func main() {
@@ -102,10 +103,12 @@ func checkRequestFields(ctx context.Context, responseWriter check.ResponseWriter
 		return nil
 	}
 	var requiredFields []string
-	if strings.HasPrefix(msgName, "List") || strings.HasPrefix(msgName, "Get") || strings.HasPrefix(msgName, "Delete") {
-		requiredFields = defaultRequiredRequestFields
-	} else {
-		return nil
+	// For Create/Update methods it would be useful to check for the
+	// `{entity}_id` field. We could add it later as an improvement.
+	for _, prefix := range crudMethodWithoutFullEntityPrefixes {
+		if strings.HasPrefix(msgName, prefix) {
+			requiredFields = defaultRequiredRequestFields
+		}
 	}
 	missingFields := findMissingFields(messageDescriptor, requiredFields)
 	if len(missingFields) > 0 {
