@@ -41,7 +41,7 @@ formatters:
         - standard # Standard section: captures all standard packages.
         - default # Default section: contains all imports that could not be matched to another section type.
         - prefix(github.com/qdrant) # Custom section: groups all imports with the specified Prefix (our company, but our own component).
-        - prefix(github.com/qdrant/terraform-provider-buf-plugin/) # Custom section: groups all imports with the specified Prefix (this component).
+        - prefix(github.com/qdrant/qdrant-cloud-buf-plugin/) # Custom section: groups all imports with the specified Prefix (this component).
   exclusions:
     generated: lax
     paths:
