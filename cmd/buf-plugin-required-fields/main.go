@@ -137,7 +137,7 @@ func getRequiredEntityFields(request check.Request) ([]string, error) {
 
 // extractEntityNames returns a set of entity names inferred from the name of
 // the service methods.
-// e.g: [ListBooks, GetBook] -> {Book}
+// e.g: [ListBooks, GetBook] -> {Book}.
 func extractEntityNames(fileDescriptor descriptor.FileDescriptor) map[string]struct{} {
 	entityNames := make(map[string]struct{})
 	services := fileDescriptor.FileDescriptorProto().GetService()
@@ -152,7 +152,7 @@ func extractEntityNames(fileDescriptor descriptor.FileDescriptor) map[string]str
 	return entityNames
 }
 
-// inferEntityFromMethodName extracts the entity name by stripping CRUD prefixes
+// inferEntityFromMethodName extracts the entity name by stripping CRUD prefixes.
 func inferEntityFromMethodName(methodName string) string {
 	p := pluralize.NewClient()
 	for _, prefix := range crudMethodPrefixes {
