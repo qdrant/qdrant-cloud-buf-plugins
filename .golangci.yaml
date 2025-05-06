@@ -1,0 +1,51 @@
+version: "2"
+linters:
+  enable:
+    - bodyclose
+    - containedctx
+    - contextcheck
+    - errorlint
+    - goconst
+    - godot
+    - importas
+    - nilerr
+    - promlinter
+    - revive
+    - sloglint
+    - testifylint
+    - unparam
+    - usestdlibvars
+  settings:
+    importas:
+      alias:
+        - pkg: ^k8s\.io/apimachinery/pkg/apis/(\w+)/(v[\w\d]+)$
+          alias: $1$2
+    revive:
+      rules:
+        - name: exported
+  exclusions:
+    generated: lax
+    paths:
+      - generated.*\.go$
+      - third_party$
+      - builtin$
+      - examples$
+formatters:
+  enable:
+    - gci
+    - gofmt
+    - goimports
+  settings:
+    gci:
+      sections:
+        - standard # Standard section: captures all standard packages.
+        - default # Default section: contains all imports that could not be matched to another section type.
+        - prefix(github.com/qdrant) # Custom section: groups all imports with the specified Prefix (our company, but our own component).
+        - prefix(github.com/qdrant/qdrant-cloud-buf-plugin/) # Custom section: groups all imports with the specified Prefix (this component).
+  exclusions:
+    generated: lax
+    paths:
+      - generated.*\.go$
+      - third_party$
+      - builtin$
+      - examples$
