@@ -1,5 +1,8 @@
 // Package main implements a plugin that checks that all rpc methods set the
-// required options (permissions, http).
+// required options. The list of options is configurable.
+// The default value is:
+// - "qdrant.cloud.common.v1.permissions"
+// - "google.api.http"
 //
 // To use this plugin:
 //
@@ -11,6 +14,10 @@
 //	   - QDRANT_CLOUD_METHOD_OPTIONS
 //	plugins:
 //	  - plugin: buf-plugin-method-options
+//	    # Uncomment in case you need to configure the list of method options to validate.
+//	    # options:
+//	    #  required_method_options:
+//	    #    - "qdrant.cloud.common.v1.permissions"
 package main
 
 import (
@@ -19,16 +26,19 @@ import (
 	"buf.build/go/bufplugin/check"
 	"buf.build/go/bufplugin/check/checkutil"
 	"buf.build/go/bufplugin/info"
+	"buf.build/go/bufplugin/option"
+	commonv1 "github.com/qdrant/qdrant-cloud-public-api/gen/go/qdrant/cloud/common/v1"
 	googleann "google.golang.org/genproto/googleapis/api/annotations"
 	"google.golang.org/protobuf/proto"
 	"google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
-
-	commonv1 "github.com/qdrant/qdrant-cloud-public-api/gen/go/qdrant/cloud/common/v1"
 )
 
 const (
+	// methodOptionsRuleID is the Rule ID of the methodOptions rule.
 	methodOptionsRuleID = "QDRANT_CLOUD_METHOD_OPTIONS"
+	// methodOptionsOptionKey is the option key to override the default list of required options.
+	methodOptionsOptionKey = "required_method_options"
 )
 
 var (
@@ -49,10 +59,11 @@ var (
 			LicenseURL:    "",
 		},
 	}
-	requiredMethodOptionExtensions = []*protoimpl.ExtensionInfo{
-		commonv1.E_Permissions,
-		googleann.E_Http,
+	extensionRegistry = map[string]*protoimpl.ExtensionInfo{
+		"qdrant.cloud.common.v1.permissions": commonv1.E_Permissions,
+		"google.api.http":                    googleann.E_Http,
 	}
+	requiredMethodOptionExtensions = []string{"qdrant.cloud.common.v1.permissions", "google.api.http"}
 )
 
 func main() {
@@ -60,9 +71,25 @@ func main() {
 }
 
 func checkMethodOptions(ctx context.Context, responseWriter check.ResponseWriter, request check.Request, methodDescriptor protoreflect.MethodDescriptor) error {
+	requiredOptions := requiredMethodOptionExtensions
+	optionValue, err := option.GetStringSliceValue(request.Options(), methodOptionsOptionKey)
+	if err != nil {
+		return err
+	}
+	if len(optionValue) > 0 {
+		requiredOptions = optionValue
+	}
+
 	options := methodDescriptor.Options()
 
-	for _, extension := range requiredMethodOptionExtensions {
+	for _, extensionKey := range requiredOptions {
+		extension, found := extensionRegistry[extensionKey]
+		if !found {
+			responseWriter.AddAnnotation(
+				check.WithMessagef("extension key %q does not exist", extensionKey),
+			)
+			return nil
+		}
 		if !proto.HasExtension(options, extension) {
 			responseWriter.AddAnnotation(
 				check.WithMessagef("Method %q does not define the %q option", methodDescriptor.FullName(), extension.TypeDescriptor().FullName()),
