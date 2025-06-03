@@ -43,13 +43,35 @@ func TestSimpleFailureWithOption(t *testing.T) {
 		ExpectedAnnotations: []checktest.ExpectedAnnotation{
 			{
 				RuleID:  requiredEntityFieldsRuleID,
-				Message: "\"BookCategory\" is missing required fields: [category]",
+				Message: "field \"updated_at\" is discouraged, use \"last_modified_at\" instead",
 				FileLocation: &checktest.ExpectedFileLocation{
 					FileName:    "simple.proto",
-					StartLine:   51,
+					StartLine:   50,
+					StartColumn: 4,
+					EndLine:     50,
+					EndColumn:   45,
+				},
+			},
+			{
+				RuleID:  requiredEntityFieldsRuleID,
+				Message: "message \"BookCategory\" is missing required fields: [category]",
+				FileLocation: &checktest.ExpectedFileLocation{
+					FileName:    "simple.proto",
+					StartLine:   53,
 					StartColumn: 0,
-					EndLine:     56,
+					EndLine:     60,
 					EndColumn:   1,
+				},
+			},
+			{
+				RuleID:  requiredEntityFieldsRuleID,
+				Message: "field \"last_updated_at\" is discouraged, use \"last_modified_at\" instead",
+				FileLocation: &checktest.ExpectedFileLocation{
+					FileName:    "simple.proto",
+					StartLine:   59,
+					StartColumn: 4,
+					EndLine:     59,
+					EndColumn:   50,
 				},
 			},
 		},
@@ -70,29 +92,51 @@ func TestSimpleFailure(t *testing.T) {
 		ExpectedAnnotations: []checktest.ExpectedAnnotation{
 			{
 				RuleID:  requiredEntityFieldsRuleID,
-				Message: "\"Book\" is missing required fields: [id account_id created_at]",
+				Message: "message \"Book\" is missing required fields: [id account_id created_at]",
 				FileLocation: &checktest.ExpectedFileLocation{
 					FileName:    "simple.proto",
 					StartLine:   42,
 					StartColumn: 0,
-					EndLine:     49,
+					EndLine:     51,
 					EndColumn:   1,
 				},
 			},
 			{
 				RuleID:  requiredEntityFieldsRuleID,
-				Message: "\"BookCategory\" is missing required fields: [name]",
+				Message: "field \"updated_at\" is discouraged, use \"last_modified_at\" instead",
 				FileLocation: &checktest.ExpectedFileLocation{
 					FileName:    "simple.proto",
-					StartLine:   51,
+					StartLine:   50,
+					StartColumn: 4,
+					EndLine:     50,
+					EndColumn:   45,
+				},
+			},
+			{
+				RuleID:  requiredEntityFieldsRuleID,
+				Message: "message \"BookCategory\" is missing required fields: [name]",
+				FileLocation: &checktest.ExpectedFileLocation{
+					FileName:    "simple.proto",
+					StartLine:   53,
 					StartColumn: 0,
-					EndLine:     56,
+					EndLine:     60,
 					EndColumn:   1,
 				},
 			},
 			{
+				RuleID:  requiredEntityFieldsRuleID,
+				Message: "field \"last_updated_at\" is discouraged, use \"last_modified_at\" instead",
+				FileLocation: &checktest.ExpectedFileLocation{
+					FileName:    "simple.proto",
+					StartLine:   59,
+					StartColumn: 4,
+					EndLine:     59,
+					EndColumn:   50,
+				},
+			},
+			{
 				RuleID:  requiredRequestFieldsRuleID,
-				Message: "\"ListBooksRequest\" is missing required fields: [account_id]",
+				Message: "message \"ListBooksRequest\" is missing required fields: [account_id]",
 				FileLocation: &checktest.ExpectedFileLocation{
 					FileName:    "simple.proto",
 					StartLine:   17,
@@ -103,7 +147,7 @@ func TestSimpleFailure(t *testing.T) {
 			},
 			{
 				RuleID:  requiredRequestFieldsRuleID,
-				Message: "\"GetBookRequest\" is missing required fields: [account_id]",
+				Message: "message \"GetBookRequest\" is missing required fields: [account_id]",
 				FileLocation: &checktest.ExpectedFileLocation{
 					FileName:    "simple.proto",
 					StartLine:   25,
