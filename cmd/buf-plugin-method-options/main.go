@@ -27,11 +27,12 @@ import (
 	"buf.build/go/bufplugin/check/checkutil"
 	"buf.build/go/bufplugin/info"
 	"buf.build/go/bufplugin/option"
-	commonv1 "github.com/qdrant/qdrant-cloud-public-api/gen/go/qdrant/cloud/common/v1"
 	googleann "google.golang.org/genproto/googleapis/api/annotations"
 	"google.golang.org/protobuf/proto"
 	"google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
+
+	commonv1 "github.com/qdrant/qdrant-cloud-public-api/gen/go/qdrant/cloud/common/v1"
 )
 
 const (
