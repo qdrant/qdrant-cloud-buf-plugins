@@ -13,4 +13,11 @@ service GreeterService {
         option (qdrant.cloud.common.v1.permissions) = "read:api_keys";
         option (google.api.http) = {get: "/api/hello-world"};
     }
+
+    rpc OpenGoodbye(google.protobuf.Empty) returns (google.protobuf.Empty) {
+        // there aren't permissions required because it doesn't require
+        // authentication.
+        option (qdrant.cloud.common.v1.requires_authentication) = false;
+        option (google.api.http) = {get: "/api/hello-world"};
+    }
 }

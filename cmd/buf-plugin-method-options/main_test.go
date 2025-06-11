@@ -59,6 +59,28 @@ func TestSimpleFailure(t *testing.T) {
 					EndColumn:   5,
 				},
 			},
+			{
+				RuleID:  methodOptionsRuleID,
+				Message: "Method \"simple.GreeterService.ClosedGoodbye\" does not define the \"google.api.http\" option",
+				FileLocation: &checktest.ExpectedFileLocation{
+					FileName:    "simple.proto",
+					StartLine:   14,
+					StartColumn: 4,
+					EndLine:     18,
+					EndColumn:   5,
+				},
+			},
+			{
+				RuleID:  methodOptionsRuleID,
+				Message: "Method \"simple.GreeterService.ClosedGoodbye\" does not define the \"qdrant.cloud.common.v1.permissions\" option",
+				FileLocation: &checktest.ExpectedFileLocation{
+					FileName:    "simple.proto",
+					StartLine:   14,
+					StartColumn: 4,
+					EndLine:     18,
+					EndColumn:   5,
+				},
+			},
 		},
 	}.Run(t)
 }
@@ -83,12 +105,27 @@ func TestSimpleFailureWithOption(t *testing.T) {
 			},
 			{
 				RuleID:  methodOptionsRuleID,
+				Message: "extension key \"unknown.extension\" does not exist",
+			},
+			{
+				RuleID:  methodOptionsRuleID,
 				Message: "Method \"simple.GreeterService.HelloWorld\" does not define the \"qdrant.cloud.common.v1.permissions\" option",
 				FileLocation: &checktest.ExpectedFileLocation{
 					FileName:    "simple.proto",
 					StartLine:   9,
 					StartColumn: 4,
 					EndLine:     12,
+					EndColumn:   5,
+				},
+			},
+			{
+				RuleID:  methodOptionsRuleID,
+				Message: "Method \"simple.GreeterService.ClosedGoodbye\" does not define the \"qdrant.cloud.common.v1.permissions\" option",
+				FileLocation: &checktest.ExpectedFileLocation{
+					FileName:    "simple.proto",
+					StartLine:   14,
+					StartColumn: 4,
+					EndLine:     18,
 					EndColumn:   5,
 				},
 			},
@@ -111,6 +148,10 @@ func TestSimpleFailureWithOptionWrongKey(t *testing.T) {
 		},
 		Spec: spec,
 		ExpectedAnnotations: []checktest.ExpectedAnnotation{
+			{
+				RuleID:  methodOptionsRuleID,
+				Message: "extension key \"unknown.extension\" does not exist",
+			},
 			{
 				RuleID:  methodOptionsRuleID,
 				Message: "extension key \"unknown.extension\" does not exist",

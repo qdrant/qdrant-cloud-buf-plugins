@@ -11,4 +11,10 @@ service GreeterService {
         // missing qdrant.cloud.common.v1.permissions
         // missing google.api.http
     }
+
+    rpc ClosedGoodbye(google.protobuf.Empty) returns (google.protobuf.Empty) {
+        option (qdrant.cloud.common.v1.requires_authentication) = true;
+        // missing qdrant.cloud.common.v1.permissions
+        // missing google.api.http
+    }
 }

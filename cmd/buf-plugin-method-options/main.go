@@ -60,11 +60,18 @@ var (
 			LicenseURL:    "",
 		},
 	}
+	permissionsOption            = commonv1.E_Permissions
+	restHTTPOption               = googleann.E_Http
+	requiresAuthenticationOption = commonv1.E_RequiresAuthentication
+
 	extensionRegistry = map[string]*protoimpl.ExtensionInfo{
-		"qdrant.cloud.common.v1.permissions": commonv1.E_Permissions,
-		"google.api.http":                    googleann.E_Http,
+		string(permissionsOption.TypeDescriptor().Descriptor().FullName()): permissionsOption,
+		string(restHTTPOption.TypeDescriptor().Descriptor().FullName()):    restHTTPOption,
 	}
-	requiredMethodOptionExtensions = []string{"qdrant.cloud.common.v1.permissions", "google.api.http"}
+	requiredMethodOptionExtensions = []string{
+		string(permissionsOption.TypeDescriptor().Descriptor().FullName()),
+		string(restHTTPOption.TypeDescriptor().Descriptor().FullName()),
+	}
 )
 
 func main() {
@@ -92,6 +99,16 @@ func checkMethodOptions(ctx context.Context, responseWriter check.ResponseWriter
 			return nil
 		}
 		if !proto.HasExtension(options, extension) {
+			// special case for "qdrant.cloud.common.v1.permissions": in case
+			// there is "qdrant.cloud.common.v1.requires_authentication" set to
+			// false, setting permissions isn't needed.
+			if extensionKey == "qdrant.cloud.common.v1.permissions" && proto.HasExtension(options, requiresAuthenticationOption) {
+				val := proto.GetExtension(options, requiresAuthenticationOption).(bool)
+				if !val {
+					// requires_authentication is false, we skip it.
+					break
+				}
+			}
 			responseWriter.AddAnnotation(
 				check.WithMessagef("Method %q does not define the %q option", methodDescriptor.FullName(), extension.TypeDescriptor().FullName()),
 				check.WithDescriptor(methodDescriptor),
