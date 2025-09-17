@@ -63,6 +63,7 @@ var (
 	permissionsOption            = commonv1.E_Permissions
 	restHTTPOption               = googleann.E_Http
 	requiresAuthenticationOption = commonv1.E_RequiresAuthentication
+	accountIdExpressionOption    = commonv1.E_AccountIdExpression
 
 	extensionRegistry = map[string]*protoimpl.ExtensionInfo{
 		string(permissionsOption.TypeDescriptor().Descriptor().FullName()): permissionsOption,
@@ -111,6 +112,28 @@ func checkMethodOptions(ctx context.Context, responseWriter check.ResponseWriter
 			}
 			responseWriter.AddAnnotation(
 				check.WithMessagef("Method %q does not define the %q option", methodDescriptor.FullName(), extension.TypeDescriptor().FullName()),
+				check.WithDescriptor(methodDescriptor),
+			)
+		}
+	}
+
+	// Check for permissions + account_id_expression conflict
+	if proto.HasExtension(options, permissionsOption) && proto.HasExtension(options, accountIdExpressionOption) {
+		permissionsExpression := proto.GetExtension(options, permissionsOption).([]string)
+		accountIdExpression := proto.GetExtension(options, accountIdExpressionOption).(string)
+
+		var permissions []string
+		for _, perm := range permissionsExpression {
+			if perm != "" {
+				permissions = append(permissions, perm)
+			}
+		}
+
+		// If there are permissions but account_id_expression is empty,
+		// this is invalid because permissions are checked in the scope of the account
+		if len(permissions) > 0 && accountIdExpression == "" {
+			responseWriter.AddAnnotation(
+				check.WithMessagef("Method %q has permissions set but account_id_expression is empty. Methods with permissions require a non-empty account_id_expression since permissions are checked in the scope of the account", methodDescriptor.FullName()),
 				check.WithDescriptor(methodDescriptor),
 			)
 		}
