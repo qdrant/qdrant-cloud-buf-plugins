@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package invalid;
+
+import "google/protobuf/empty.proto";
+import "google/protobuf/descriptor.proto";
+import "../common.proto";
+import "../google.proto";
+
+service GreeterService {
+    rpc HelloWorldWithConflict(google.protobuf.Empty) returns (google.protobuf.Empty) {
+        // This should fail: permissions set with empty account_id_expression
+        option (qdrant.cloud.common.v1.permissions) = "write:user";
+        option (qdrant.cloud.common.v1.account_id_expression) = "";
+        option (google.api.http) = {get: "/api/hello-world-conflict"};
+    }
+}

@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+package valid;
+
+import "google/protobuf/empty.proto";
+import "google/protobuf/descriptor.proto";
+import "../common.proto";
+import "../google.proto";
+
+service GreeterService {
+    rpc HelloWorldWithValidAccount(google.protobuf.Empty) returns (google.protobuf.Empty) {
+        // This should pass: permissions set with valid account_id_expression
+        option (qdrant.cloud.common.v1.permissions) = "write:user";
+        option (qdrant.cloud.common.v1.account_id_expression) = "request.account_id";
+        option (google.api.http) = {get: "/api/hello-world-valid"};
+    }
+
+    rpc HelloWorldNoPermissions(google.protobuf.Empty) returns (google.protobuf.Empty) {
+        // This should pass: no permissions, empty account_id_expression is ok
+        option (qdrant.cloud.common.v1.permissions) = "";
+        option (qdrant.cloud.common.v1.account_id_expression) = "";
+        option (google.api.http) = {get: "/api/hello-world-no-perms"};
+    }
+}

@@ -160,3 +160,44 @@ func TestSimpleFailureWithOptionWrongKey(t *testing.T) {
 	}.Run(t)
 
 }
+
+func TestPermissionsConflictSuccess(t *testing.T) {
+	t.Parallel()
+
+	checktest.CheckTest{
+		Request: &checktest.RequestSpec{
+			Files: &checktest.ProtoFileSpec{
+				DirPaths:  []string{"testdata/permissions_conflict_success"},
+				FilePaths: []string{"valid.proto"},
+			},
+		},
+		Spec: spec,
+	}.Run(t)
+}
+
+func TestPermissionsConflictFailure(t *testing.T) {
+	t.Parallel()
+
+	checktest.CheckTest{
+		Request: &checktest.RequestSpec{
+			Files: &checktest.ProtoFileSpec{
+				DirPaths:  []string{"testdata/permissions_conflict_failure"},
+				FilePaths: []string{"invalid.proto"},
+			},
+		},
+		Spec: spec,
+		ExpectedAnnotations: []checktest.ExpectedAnnotation{
+			{
+				RuleID:  methodOptionsRuleID,
+				Message: "Method \"invalid.GreeterService.HelloWorldWithConflict\" has permissions set but account_id_expression is empty. Methods with permissions require a non-empty account_id_expression since permissions are checked in the scope of the account",
+				FileLocation: &checktest.ExpectedFileLocation{
+					FileName:    "invalid.proto",
+					StartLine:   10,
+					StartColumn: 4,
+					EndLine:     15,
+					EndColumn:   5,
+				},
+			},
+		},
+	}.Run(t)
+}

@@ -12,6 +12,15 @@ extend google.protobuf.MethodOptions {
     repeated string permissions = 50001;
 }
 
+// The extension for adding an expression where to find the account ID in a message
+// If the extension is missing 'account_id' will be used.
+extend google.protobuf.MethodOptions {
+    // The expression to find the account ID field, which should be a string field.
+    // It is allowed to nest fields with a point, like 'cluster.account_id' or 'account.id'
+    // If the expression is set to an empty string, no account ID will be used.
+    string account_id_expression = 50002;
+}
+
 // The extension for allowing a method to be be used without authentication.
 // If the extension is missing the system requires authentication and return a 'permission denied' error if missing.
 extend google.protobuf.MethodOptions {
