@@ -1,0 +1,62 @@
+syntax = "proto3";
+
+package qdrant.cloud.common.v1;
+
+import "google/protobuf/descriptor.proto";
+
+// The extension for adding permissions to the system
+extend google.protobuf.MethodOptions {
+    // A list of permissions which need to be met by the current user.
+    // If `requires_all_permissions` is true (or missing): ALL of the permissions should be met (and)
+    // If `requires_all_permissions` is false: ANY-OF the permissions should be met (or)
+    repeated string permissions = 50001;
+}
+
+// The extension for adding an expression where to find the account ID in a message
+// If the extension is missing 'account_id' will be used.
+extend google.protobuf.MethodOptions {
+    // The expression to find the account ID field, which should be a string field.
+    // It is allowed to nest fields with a point, like 'cluster.account_id' or 'account.id'
+    // If the expression is set to an empty string, no account ID will be used.
+    string account_id_expression = 50002;
+}
+
+// The extension for allowing a method to be be used without authentication.
+// If the extension is missing the system requires authentication and return a 'permission denied' error if missing.
+extend google.protobuf.MethodOptions {
+    // Set to allow a method to be used without authentication.
+    bool requires_authentication = 50003;
+}
+
+// The extension for allowing a method to be be used with specific actor types.
+// If the extension is missing the system allows all actor types.
+extend google.protobuf.MethodOptions {
+    // If this option is set, only the specified actor types are allowed to call the method.
+    // If empty or not set, all authenticated actor types (that pass other permission checks) are allowed.
+    repeated ActorType supported_actor_types = 50004 [
+        packed = true
+    ];
+}
+
+// The extension for switching `permissions` from ALL to ANY-OF
+// If the extension is missing 'true' will be used (defaulting to ALL).
+extend google.protobuf.MethodOptions {
+  // If set to true the provided permissions are ALL (and)
+  // if set to false the provided permissions are ANY-OF (or).
+  bool requires_all_permissions = 50005;
+}
+
+// ActorType specifies the type of actor that can call a method.
+enum ActorType {
+  // Default, unspecified actor type. Should generally not be used explicitly in options
+  // unless to signify an error or uninitialized state.
+  ACTOR_TYPE_UNSPECIFIED = 0;
+  // Represents a human user, typically authenticated via an identity provider (Auth0).
+  ACTOR_TYPE_USER = 1;
+  // Represents a programmatic access key, also called management key,
+  // that is not be tied to a specific user or service account identity, but rather an account.
+  ACTOR_TYPE_MANAGEMENT_KEY = 2;
+  // Represents a service account or machine user, often used for M2M communication.
+  // This is for internal platform use only.
+  ACTOR_TYPE_SERVICE_ACCOUNT = 3;
+}
