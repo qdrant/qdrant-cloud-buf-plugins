@@ -7,7 +7,7 @@ require (
 	github.com/gertd/go-pluralize v0.2.1
 	github.com/qdrant/qdrant-cloud-public-api v0.80.0
 	google.golang.org/genproto/googleapis/api v0.0.0-20251029180050-ab9386a59fda
-	google.golang.org/protobuf v1.36.10
+	google.golang.org/protobuf v1.36.11
 )
 
 require (
