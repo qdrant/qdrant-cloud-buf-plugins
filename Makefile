@@ -38,7 +38,7 @@ GOLANGCI_LINT = $(LOCALBIN)/golangci-lint
 GCI = $(LOCALBIN)/gci
 
 ## Tool Versions
-GOLANGCI_LINT_VERSION ?= v2.6.1
+GOLANGCI_LINT_VERSION ?= v2.7.2
 GCI_VERSION ?= v0.13.5
 
 .PHONY: bootstrap
