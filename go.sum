@@ -35,8 +35,8 @@ github.com/mattn/go-isatty v0.0.20 h1:xfD0iDuEKnDkl03q4limB+vH+GxLEtL/jb4xVJSWWE
 github.com/mattn/go-isatty v0.0.20/go.mod h1:W+V8PltTTMOvKvAeJH7IuucS94S2C6jfK/D7dTCTo3Y=
 github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
-github.com/qdrant/qdrant-cloud-public-api v0.96.0 h1:zVco7VoqgOYKfl79B4Yf9UfZerPmb8L2nB3F7JGiecs=
-github.com/qdrant/qdrant-cloud-public-api v0.96.0/go.mod h1:XqgxNTOYlCx1d6UKbPjttSyORF3WCvZefOpYTlBcJ8g=
+github.com/qdrant/qdrant-cloud-public-api v0.99.1 h1:vyCJNMDVoGg5/fhTG8VyhiA7woBRe0IOXDgeO8nE5I8=
+github.com/qdrant/qdrant-cloud-public-api v0.99.1/go.mod h1:XqgxNTOYlCx1d6UKbPjttSyORF3WCvZefOpYTlBcJ8g=
 github.com/rodaine/protogofakeit v0.1.1 h1:ZKouljuRM3A+TArppfBqnH8tGZHOwM/pjvtXe9DaXH8=
 github.com/rodaine/protogofakeit v0.1.1/go.mod h1:pXn/AstBYMaSfc1/RqH3N82pBuxtWgejz1AlYpY1mI0=
 github.com/spf13/pflag v1.0.10 h1:4EBh2KAYBwaONj6b2Ye1GiHfwjqyROoF4RwYO+vPwFk=
