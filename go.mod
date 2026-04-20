@@ -5,7 +5,7 @@ go 1.25.0
 require (
 	buf.build/go/bufplugin v0.9.0
 	github.com/gertd/go-pluralize v0.2.1
-	github.com/qdrant/qdrant-cloud-public-api v0.115.0
+	github.com/qdrant/qdrant-cloud-public-api v0.117.0
 	google.golang.org/genproto/googleapis/api v0.0.0-20260316180232-0b37fe3546d5
 	google.golang.org/protobuf v1.36.11
 )
