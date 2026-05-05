@@ -5,8 +5,8 @@ go 1.25.0
 require (
 	buf.build/go/bufplugin v0.10.0
 	github.com/gertd/go-pluralize v0.2.1
-	github.com/qdrant/qdrant-cloud-public-api v0.119.0
-	google.golang.org/genproto/googleapis/api v0.0.0-20260420184626-e10c466a9529
+	github.com/qdrant/qdrant-cloud-public-api v0.121.0
+	google.golang.org/genproto/googleapis/api v0.0.0-20260427160629-7cedc36a6bc4
 	google.golang.org/protobuf v1.36.11
 )
 
@@ -29,7 +29,7 @@ require (
 	golang.org/x/sync v0.20.0 // indirect
 	golang.org/x/sys v0.43.0 // indirect
 	golang.org/x/text v0.36.0 // indirect
-	google.golang.org/genproto/googleapis/rpc v0.0.0-20260420184626-e10c466a9529 // indirect
+	google.golang.org/genproto/googleapis/rpc v0.0.0-20260427160629-7cedc36a6bc4 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 	pluginrpc.com/pluginrpc v0.5.0 // indirect
 )
