@@ -36,6 +36,8 @@ const (
 	requiredEntityFieldsOptionKey  = "required_entity_fields"
 	requiredRequestFieldsRuleID    = "QDRANT_CLOUD_REQUIRED_REQUEST_FIELDS"
 	requiredRequestFieldsOptionKey = "required_request_fields"
+
+	cloudProviderRegionIDFieldName = "cloud_provider_region_id"
 )
 
 // FieldValidator validates a single field.
@@ -88,9 +90,9 @@ var (
 		"updated_at":            "last_modified_at",
 		"last_updated_at":       "last_modified_at",
 		"cloud_provider":        "cloud_provider_id",
-		"cloud_provider_region": "cloud_provider_region_id",
-		"cloud_region":          "cloud_provider_region_id",
-		"cloud_region_id":       "cloud_provider_region_id",
+		"cloud_provider_region": cloudProviderRegionIDFieldName,
+		"cloud_region":          cloudProviderRegionIDFieldName,
+		"cloud_region_id":       cloudProviderRegionIDFieldName,
 	}
 )
 

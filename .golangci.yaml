@@ -25,6 +25,10 @@ linters:
         - name: exported
   exclusions:
     generated: lax
+    rules:
+      - path: _test\.go
+        linters:
+          - goconst
     paths:
       - generated.*\.go$
       - third_party$
