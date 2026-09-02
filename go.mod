@@ -1,18 +1,18 @@
 module github.com/qdrant/qdrant-cloud-buf-plugins
 
-go 1.26.0
+go 1.26.6
 
 require (
 	buf.build/go/bufplugin v0.10.0
 	github.com/gertd/go-pluralize v0.2.1
-	github.com/qdrant/qdrant-cloud-public-api v0.163.2
+	github.com/qdrant/qdrant-cloud-public-api v0.176.0
 	google.golang.org/genproto/googleapis/api v0.0.0-20260713224248-f5fc221cf8c4
-	google.golang.org/protobuf v1.36.11
+	google.golang.org/protobuf v1.36.12
 )
 
 require (
 	buf.build/gen/go/bufbuild/bufplugin/protocolbuffers/go v1.36.11-20260626152828-968bf0468096.1 // indirect
-	buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go v1.36.11-20260709200747-435963d16310.1 // indirect
+	buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go v1.36.12-20260709200747-435963d16310.1 // indirect
 	buf.build/gen/go/pluginrpc/pluginrpc/protocolbuffers/go v1.36.11-20241007202033-cf42259fcbfc.1 // indirect
 	buf.build/go/protovalidate v1.2.0 // indirect
 	buf.build/go/spdx v0.2.0 // indirect
