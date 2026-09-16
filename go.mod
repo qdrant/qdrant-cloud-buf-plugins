@@ -5,14 +5,14 @@ go 1.26.6
 require (
 	buf.build/go/bufplugin v0.10.0
 	github.com/gertd/go-pluralize v0.2.1
-	github.com/qdrant/qdrant-cloud-public-api v0.179.0
+	github.com/qdrant/qdrant-cloud-public-api v0.183.0
 	google.golang.org/genproto/googleapis/api v0.0.0-20260713224248-f5fc221cf8c4
 	google.golang.org/protobuf v1.36.12
 )
 
 require (
 	buf.build/gen/go/bufbuild/bufplugin/protocolbuffers/go v1.36.11-20260626152828-968bf0468096.1 // indirect
-	buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go v1.36.12-20260709200747-435963d16310.1 // indirect
+	buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go v1.36.12-20260825204119-511051f7f437.1 // indirect
 	buf.build/gen/go/pluginrpc/pluginrpc/protocolbuffers/go v1.36.11-20241007202033-cf42259fcbfc.1 // indirect
 	buf.build/go/protovalidate v1.2.0 // indirect
 	buf.build/go/spdx v0.2.0 // indirect
@@ -29,7 +29,7 @@ require (
 	golang.org/x/exp v0.0.0-20260709172345-9ea1abe57597 // indirect
 	golang.org/x/sync v0.22.0 // indirect
 	golang.org/x/sys v0.47.0 // indirect
-	golang.org/x/text v0.40.0 // indirect
+	golang.org/x/text v0.41.0 // indirect
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20260713224248-f5fc221cf8c4 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 	pluginrpc.com/pluginrpc v0.5.0 // indirect
