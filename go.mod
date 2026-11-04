@@ -1,11 +1,11 @@
 module github.com/qdrant/qdrant-cloud-buf-plugins
 
-go 1.26.6
+go 1.26.10
 
 require (
 	buf.build/go/bufplugin v0.11.1
 	github.com/gertd/go-pluralize v0.2.1
-	github.com/qdrant/qdrant-cloud-public-api v0.216.0
+	github.com/qdrant/qdrant-cloud-public-api v0.218.0
 	google.golang.org/genproto/googleapis/api v0.0.0-20260713224248-f5fc221cf8c4
 	google.golang.org/protobuf v1.36.12
 )
